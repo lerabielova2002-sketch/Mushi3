@@ -53,8 +53,14 @@ function Lobby({ onStart }) {
         muted
         playsInline
         preload="metadata"
-        onLoadedData={() => setIsLobbyReady(true)}
-        onError={() => setIsLobbyReady(true)}
+        onLoadedData={() => {
+          setIsLobbyReady(true)
+          console.log('Lobby video loaded and ready.')
+        }}
+        onError={() => {
+          setIsLobbyReady(true)
+          console.error('Failed to load lobby video.')
+        }}
         aria-hidden="true"
       />
       <div className="lobby-video-shade" aria-hidden="true" />
