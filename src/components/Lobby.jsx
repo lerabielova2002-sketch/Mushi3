@@ -65,14 +65,22 @@ function Lobby({ onStart }) {
       <audio ref={musicRef} src="/Lobby_lobby.mp3" loop preload="auto" />
 
       {page === 'credits' ? (
-        <button
-          className="lobby-credits-image"
-          type="button"
-          onClick={() => handleButtonClick(() => setPage('menu'))}
-          aria-label="Back to Menu"
-        >
-          <img src="/credits.png" alt="" draggable="false" />
-        </button>
+        <>
+          <div
+            className="lobby-credits-image"
+            aria-hidden="true"
+          >
+            <img src="/credits.png" alt="" draggable="false" />
+          </div>
+          <button
+            className="lobby-credits-back"
+            type="button"
+            onClick={() => handleButtonClick(() => setPage('menu'))}
+            aria-label="Back to Menu"
+          >
+            <img src="/back.png" alt="" draggable="false" />
+          </button>
+        </>
       ) : (
         <div className="lobby-screen">
           <nav className="lobby-menu" aria-label="Main Menu">

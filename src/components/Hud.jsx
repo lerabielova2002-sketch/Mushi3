@@ -2,10 +2,10 @@ import DeathScreen from './DeathScreen'
 import { useGame } from '../context/GameContext'
 
 // HUD — звичайний HTML поверх 3D-сцени.
-function Hud() {
+function Hud({ onReturnToMenu }) {
   const { lives, score, fluteNotes, status, resetGame } = useGame()
 
-  if (status === 'game-over') return <DeathScreen />
+  if (status === 'game-over') return <DeathScreen onReturnToMenu={onReturnToMenu} />
 
   return (
     <div style={{ position: 'absolute', top: 10, left: 10, color: 'white', fontSize: 24 }}>

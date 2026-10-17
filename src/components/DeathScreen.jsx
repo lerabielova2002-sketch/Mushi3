@@ -12,8 +12,8 @@ const DEATH_SCREEN_IMAGES = {
   'fight-level-2': '/gameover-fight-level-2.png',
 }
 
-function DeathScreen() {
-  const { deathReason, resetGame } = useGame()
+function DeathScreen({ onReturnToMenu }) {
+  const { deathReason, restartLevel, resetGame } = useGame()
   const image = DEATH_SCREEN_IMAGES[deathReason]
 
   useEffect(() => {
@@ -70,7 +70,17 @@ function DeathScreen() {
     clickSound.play().catch((error) => {
       console.error('Could not play the button click sound:', error)
     })
+    restartLevel()
+  }
+
+  const returnToMenu = () => {
+    const clickSound = new Audio('/mixkit-gate-latch-click-1924.wav')
+    clickSound.volume = 0.7
+    clickSound.play().catch((error) => {
+      console.error('Could not play the button click sound:', error)
+    })
     resetGame()
+    onReturnToMenu()
   }
 
   if (!image) {
@@ -79,10 +89,29 @@ function DeathScreen() {
 
   return (
     <main className="death-screen" aria-label="Кінець гри">
-      <img className="death-screen-background" src={image} alt="" />
-      <button className="death-screen-restart" type="button" onClick={restart} aria-label="Почати знову">
-        <img src="/start-again.png" alt="" draggable="false" />
-      </button>
+      <img
+        className="death-screen-background"
+        src={image}
+        alt=""
+      />
+      <div className="death-screen-actions">
+        <button
+          className="death-screen-restart death-screen-restart--actions"
+          type="button"
+          onClick={restart}
+          aria-label="Перезапустити рівень"
+        >
+          <img src="/start-again.png" alt="" draggable="false" />
+        </button>
+        <button
+          className="death-screen-menu"
+          type="button"
+          onClick={returnToMenu}
+          aria-label="Меню"
+        >
+          <img src="/Menu.png" alt="" draggable="false" />
+        </button>
+      </div>
     </main>
   )
 }

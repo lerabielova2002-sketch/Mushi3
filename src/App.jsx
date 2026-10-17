@@ -37,6 +37,17 @@ function App() {
     setIsPlaying(true)
   }
 
+  const returnToMenu = () => {
+    const audioRefs = [fightMusicRef, forestAmbienceRef, desertAmbienceRef, lavaAmbienceRef]
+    audioRefs.forEach((audioRef) => {
+      if (!audioRef.current) return
+      audioRef.current.pause()
+      audioRef.current.currentTime = 0
+    })
+    setTutorialImage(null)
+    setIsPlaying(false)
+  }
+
   useEffect(() => {
     const handleLevelReady = () => setTutorialImage('/tutorialmove.png')
     const handleFightTutorial = () => setTutorialImage('/tutorialfight.png')
@@ -70,7 +81,7 @@ function App() {
             desertAmbienceRef={desertAmbienceRef}
             lavaAmbienceRef={lavaAmbienceRef}
           />
-          <Hud />
+          <Hud onReturnToMenu={returnToMenu} />
           {tutorialImage && (
             <div className="level-tutorial" aria-hidden="true">
               <img src={tutorialImage} alt="" draggable="false" />
